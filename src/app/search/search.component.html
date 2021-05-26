@@ -8,7 +8,7 @@
             <select formControlName="airline" class="form-control">
                 <option disabled>Select Airline</option>
                 <option>Choose Airline</option>
-                <option *ngFor="let air of airlineList">{{air}}</option>
+                <option *ngFor="let air of AirlinesCodesList | keyvalue">{{air.value}}</option>
             </select>
             <div *ngIf="f.airline.touched && f.airline.invalid" class="alert alert-danger">
                 <div *ngIf="f.airline.errors.required">Airline Name is required.</div>
@@ -23,16 +23,10 @@
                 <div *ngIf="f.module.errors.required">Module Name is required.</div>
             </div>
         <button class="btn btn-primary" type="submit" [disabled]="!form.valid" style="padding: 5px; margin:10px">Submit</button>
+        <button class="btn btn-primary" type="button" (click)="refreshList()" [disabled]="!form.valid" style="padding: 5px; margin:10px">Refresh</button>
       </div>
     </form>
   </div>
-
-
-
-
-
-
-
 
 
 
@@ -55,12 +49,12 @@
         </tr>
        </thead>
        <tbody style="background-color: white;">
-        <tr *ngFor="let user of userList | paginate: config">
-         <td >{{ user.AirlinesCode }}</td>
-         <td >{{ user.Module }}</td>
-         <td >{{ user.ParameterName }}</td>
-         <td >{{ user.Description }}</td>
-         <td >{{ user.ParameterValue }}</td>
+        <tr *ngFor="let user of parameterList|filter:dropDownData|paginate: config">
+         <td >{{user.codes}}</td>
+         <td ></td>
+         <td >{{ user.names}}</td>
+         <td ></td>
+         <td >{{ user.values}}</td>
          <td>
           <button type="button" class="btn btn-primary" (click)="openModal(editProfileModal, user)" style="color: blue; background: none; border: none;">Edit</button>
          </td>
@@ -74,7 +68,7 @@
 
    <div class="container-fluid">
     <div style="text-align: center;">
-      <button type="button" class="btn btn-info" style="background-color:#005eb8 ;" >Export</button>
+      <button type="button" class="btn btn-info" style="background-color:#005eb8 ; " (click)="exportElmToExcel()">Export</button>
     </div>
   </div>
   

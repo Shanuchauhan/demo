@@ -7,25 +7,29 @@ import { Observable } from 'rxjs';
 })
 export class GetAirlineCodesService {
 
-  private SERVER_URL = "http://NCERNDOBEDEV6519.etv.nce.amadeus.net:57509/1ASIREV/DIYGUI"
+  private SERVER_URL = "http://NCERNDOBEDEV6632.etv.nce.amadeus.net:57509/1ASIREV/DIYGUI"
   
 
   constructor(private httpClient : HttpClient) { }
   
-  public fetchData():Observable<any>{
-    return this.httpClient.get(`${this.SERVER_URL}/retrieveairlinecodes`);
-
+  public fetchAirlineCodes():Observable<any>{
+    return this.httpClient.get(`${this.SERVER_URL}/codes`);
   }
 
-  public fetchAirlineData():Observable<any>{
-    return this.httpClient.get(`${this.SERVER_URL}/airline`);
+  public fetchAirlineParameterNames():Observable<any>{
+    return this.httpClient.get(`${this.SERVER_URL}/params`);
   }
 
-  public fetchCurrencyData():Observable<any>{
-    return this.httpClient.get(`${this.SERVER_URL}/currency`);
+  public fetchAirlineParameterCodes():Observable<any>{
+    return this.httpClient.get(`${this.SERVER_URL}/parameterairline`);
   }
 
-  public X():Observable<any>{
-    return this.httpClient.get(`${this.SERVER_URL}/retrieveAirlineCodes`);
+  public fetchAirlineParameterValues():Observable<any>{
+    return this.httpClient.get(`${this.SERVER_URL}/values`);
   }
+    
+  public sendAirlineParameters(data):Observable<any>{
+    return this.httpClient.post(`${this.SERVER_URL}/update`,data);
+  }
+
 }

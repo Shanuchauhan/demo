@@ -1,1 +1,195 @@
-<p>compare works!</p>
+<div class="container-fluid"> 
+  <div class="container">
+        
+    <form [formGroup]="dropDownForm" (ngSubmit)="submit()">
+           
+        <div class="form-group form-inline">
+            <label for="airline1" style="padding: 15px;">Airlines 1:</label>
+            <select formControlName="airline1" class="form-control">
+                <option disabled>Select Airline</option>
+                <option>Choose Airline</option>
+                <option *ngFor="let air of AirlinesCodesList | keyvalue">{{air.value}}</option>
+            </select>
+            <div *ngIf="f.airline1.touched && f.airline1.invalid" class="alert alert-danger">
+            </div>
+
+            <label for="airline2" style="padding: 15px;">Airlines 2:</label>
+            <select formControlName="airline2" class="form-control">
+                <option disabled>Select Airline</option>
+                <option>Choose Airline</option>
+                <option *ngFor="let air of AirlinesCodesList | keyvalue">{{air.value}}</option>
+            </select>
+            <div *ngIf="f.airline2.touched && f.airline2.invalid" class="alert alert-danger">
+            </div>
+
+            <label for="module" style="padding: 15px;">Module:</label>
+            <select formControlName="module" class="form-control">
+                <option disabled>Select Module</option>
+                <option>Choose Module</option>
+                <option *ngFor="let air of moduleList">{{air}}</option>
+            </select>
+            <div *ngIf="f.module.touched && f.module.invalid" class="alert alert-danger">
+            </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!dropDownForm.valid" style="padding: 5px; margin:10px" >Submit</button>
+        <!-- <button class="btn btn-primary" type="button" (click)="refreshList()" [disabled]="!dropDownForm.valid" style="padding: 5px; margin:10px">Refresh</button> -->
+      </div>
+    </form>
+  </div>
+
+  
+  
+  <div class="container">
+      <div class="row">
+       <div class="col-md-12 py-4 text-center">
+       </div>
+      </div>
+      <!-- <label for="module" style="padding: 15px;">Filter</label>
+      <input type="text" [(ngModel)]="name" #filterInput />
+      <button class="btn btn-primary" (click)="filterByParameterName(filterInput.value)" type="submit" style="padding: 5px; margin:10px" formtarget="_blank">Search</button>   -->
+      <div class="row justify-content-center">
+       <div class="col-md-12 py-4">
+        <table class="table table-bordered table-sm" #userTable style="overflow: hidden;"> 
+         <thead style="background-color: #e6d9c6;">
+          <tr>
+           <th scope="col">Module</th>
+           <th scope="col">Parameter Name
+             <div>
+              <input type="text" (keyup.enter)="filterByParameterName(filterInput.value)" style="line-height: 1px;width:150px; background-color: #e6d9c6;" #filterInput [(ngModel)]="filterField" />
+             </div>  
+            </th>
+           <th scope="col">Description</th>
+           <th scope="col">{{column1}} Parameter Value </th>
+           <th scope="col">Action </th>
+           <th scope="col">{{column2}} Parameter Value </th>
+           <th scope="col">Action </th>
+          </tr>
+         </thead>
+         <tbody *ngIf="showme1" style="background-color: white;">
+          <tr *ngFor="let user of parameterCompareList|filter:textFieldFilterData|paginate: config">
+           <td ></td>
+           <td >{{user.names}}</td>
+           <td ></td>
+           <td [style.color]="getBackgroundColor(user)">{{ user.value1}}</td>
+           <td >
+            <button type="button" *ngIf="showme1" class="btn btn-primary" (click)="openModal1(editProfileModal1, user)" style="color: blue; background: none; border: none;">Edit</button>
+           </td>
+           <td [style.color]="getBackgroundColor(user)">{{ user.value2}}</td>
+           <td >
+            <button type="button" *ngIf="showme2" class="btn btn-primary" (click)="openModal2(editProfileModal2, user)" style="color: blue; background: none; border: none;">Edit</button>
+           </td>
+          </tr>
+         </tbody>
+         <pagination-controls (pageChange) = "pageChanged($event)"></pagination-controls>
+        </table>
+       </div>
+      </div>
+     </div>
+  
+     <div class="container-fluid">
+      <div style="text-align: center;">
+        <button type="button" class="btn btn-info" style="background-color:#005eb8 ; " (click)="exportElmToExcel()">Export</button>
+      </div>
+    </div>
+      
+     <ng-template #editProfileModal1 let-modal>
+      <div class="modal-header">
+       <h5 class="modal-title" id="editProfileLabel">Configure Parameters</h5>
+       <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+       </button>
+      </div>
+      
+      <div class="modal-body">
+       <form [formGroup]="editProfileForm1" (ngSubmit)="onSubmitEditButton1()">
+        <div class="form-group row">
+         <label for="firstname" class="col-sm-4 col-form-label">Airlines Code</label>
+         <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="AirlinesCode" id="AirlinesCode">
+         </div>
+        </div>
+        <div class="form-group row">
+         <label for="lastname" class="col-sm-4 col-form-label">Module</label>
+         <div class="col-sm-8">
+          <input type="text" ng-raeadonly="all" class="form-control" formControlName="Module" id="Module">
+         </div>
+        </div>
+        <div class="form-group row">
+         <label for="username" class="col-sm-4 col-form-label">Parameter Name</label>
+         <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="ParameterName" id="ParameterName">
+         </div>
+        </div>
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Description</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="Description" id="Description">
+          </div>
+         </div>
+  
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">ParameterValue</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="ParameterValue" id="ParameterValue">
+          </div>
+         </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+         </div>  
+       </form>
+
+      </div>
+     </ng-template>
+
+     <ng-template #editProfileModal2 let-modal>
+      <div class="modal-header">
+       <h5 class="modal-title" id="editProfileLabel">Configure Parameters</h5>
+       <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+       </button>
+      </div>
+      
+      <div class="modal-body">
+       <form [formGroup]="editProfileForm2" (ngSubmit)="onSubmitEditButton2()">
+        <div class="form-group row">
+         <label for="firstname" class="col-sm-4 col-form-label">Airlines Code</label>
+         <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="AirlinesCode" id="AirlinesCode">
+         </div>
+        </div>
+        <div class="form-group row">
+         <label for="lastname" class="col-sm-4 col-form-label">Module</label>
+         <div class="col-sm-8">
+          <input type="text" ng-raeadonly="all" class="form-control" formControlName="Module" id="Module">
+         </div>
+        </div>
+        <div class="form-group row">
+         <label for="username" class="col-sm-4 col-form-label">Parameter Name</label>
+         <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="ParameterName" id="ParameterName">
+         </div>
+        </div>
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Description</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="Description" id="Description">
+          </div>
+         </div>
+  
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">ParameterValue</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="ParameterValue" id="ParameterValue">
+          </div>
+         </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+         </div>  
+       </form>
+
+      </div>
+     </ng-template>
+  </div>

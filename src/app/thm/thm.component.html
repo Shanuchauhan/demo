@@ -1,0 +1,707 @@
+<div width="95%">
+
+    <div class>
+      <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <a class="navbar-brand" href="#">Task Handling Management Module</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    </div>
+    <a href="static/app/ParameterConfig.html">Airline Parameter Home</a> <!-- || <a href="static/app/index.html">THM DIY Home</a> -->
+    <div class="ApplicationHeader">
+      <img src="https://intranet.test-airlineretailing.amadeus.com:55001/1ASIHRSC1A/arp/framework/default/frames/AppliIcon.gif">
+      <span> Task Handling Module</span>
+    </div>
+    
+    <div class="container">
+    
+    <form class="form-inline">
+      <select id="cmbAirlineFilter" class=" combo form-control" size="1" name="airlineFilter" onchange="'show_apps()'" style="visibility: visible;">
+        <option value="">No Airline Filter</option>
+        <option *ngFor="let air of airlineData" >{{ air }}</option>
+        <option value="BA">BA</option> 
+        <option value="SV">SV</option>
+      </select>
+    
+      <select onchange="onTaskItemChange('cmbApplicationFilter','cmbTaskTypeFilter','cmbTaskSubTypeFilter','cmbBusinessData1Filter','cmbBusinessData2Filter','cmbBusinessData3Filter')" id="cmbApplicationFilter" class=" combo form-control" size="1" name="applicationFilter" style="visibility: visible;">
+        <option value="">No Application Filter</option>
+        <option value="Accounting">Accounting</option>
+        <option value="Agency Memo">Agency Memo</option>
+        <option value="Codeshare">Codeshare</option>
+        <option value="Expiration">Expiration</option>
+        <option value="FIM Acquisition">FIM Acquisition</option>
+        <option value="FOP Reconciliation">FOP Reconciliation</option>
+        <option value="Interline">Interline</option>
+        <option value="One-World Alliance">One-World Alliance</option>
+        <option value="Paper Stock Control">Paper Stock Control</option>
+        <option value="Proration">Proration</option>
+        <option value="Realtime Acquisition">Realtime Acquisition</option>
+        <option value="Sales Auditing">Sales Auditing</option>
+        <option value="Sales Reconciliation">Sales Reconciliation</option>
+        <option value="Tax">Tax</option>
+        <option value="Usage Monitoring">Usage Monitoring</option>
+        <!-- <option *ngFor="let app of dis_app">{{ app.Application }}</option> -->
+      </select>
+    
+      <select onchange="onTaskItemChange('cmbApplicationFilter','cmbTaskTypeFilter','cmbTaskSubTypeFilter','cmbBusinessData1Filter','cmbBusinessData2Filter','cmbBusinessData3Filter')" id="cmbTaskTypeFilter" class="combo form-control" size="1" name="tasktypeFilter" style="visibility: visible;">
+        <option value="">No TaskType Filter</option>
+        <option value="Agency Not Billable">Agency Not Billable</option>
+        <option value="Amount Discrepancy">Amount Discrepancy</option>
+        <option value="Automatic Creation Failed">Automatic Creation Failed</option>
+        <option value="Balance Adjustment">Balance Adjustment</option>
+        <option value="Billed FIM Coupon Missing">Billed FIM Coupon Missing</option>
+        <option value="Billing Memo Reception">Billing Memo Reception</option>
+        <option value="Billing Memo Validation">Billing Memo Validation</option>
+        <option value="Cancelled flight">Cancelled flight</option>
+        <option value="Change at Usage Task">Change at Usage Task</option>
+        <option value="Configuration">Configuration</option>
+        <option value="Correspondence Closure">Correspondence Closure</option>
+        <option value="Correspondence Start">Correspondence Start</option>
+        <option value="Corrupted HOT/CAT file">Corrupted HOT/CAT file</option>
+        <option value="Credit Memo Reception">Credit Memo Reception</option>
+        <option value="Credit Memo Validation">Credit Memo Validation</option>
+        <option value="Discrepancy Tracking">Discrepancy Tracking</option>
+        <option value="Dispute">Dispute</option>
+        <option value="Duplicate Transaction">Duplicate Transaction</option>
+        <option value="Exchange Validation Error">Exchange Validation Error</option>
+        <option value="FCS Flown to Open">FCS Flown to Open</option>
+        <option value="Fare Quote Unavailable">Fare Quote Unavailable</option>
+        <option value="Flight Envelope Acquisition">Flight Envelope Acquisition</option>
+        <option value="Follow Up Transaction">Follow Up Transaction</option>
+        <option value="Forced Task Closure">Forced Task Closure</option>
+        <option value="IBE">IBE</option>
+        <option value="Inconsistent Record">Inconsistent Record</option>
+        <option value="Incorrect Billing Code">Incorrect Billing Code</option>
+        <option value="Integrity Check">Integrity Check</option>
+        <option value="Invalid Currency">Invalid Currency</option>
+        <option value="Invalid Transition">Invalid Transition</option>
+        <option value="Inventory Mapping">Inventory Mapping</option>
+        <option value="Invoice Total Diff Excess">Invoice Total Diff Excess</option>
+        <option value="Invoicing Batch Validation">Invoicing Batch Validation</option>
+        <option value="Inward Csh Usage">Inward Csh Usage</option>
+        <option value="Issuance Commission Validation">Issuance Commission Validation</option>
+        <option value="Issuance Request">Issuance Request</option>
+        <option value="Journal Entry Balance">Journal Entry Balance</option>
+        <option value="KIOSK">KIOSK</option>
+        <option value="Late Data File">Late Data File</option>
+        <option value="Late Dispute">Late Dispute</option>
+        <option value="Late Sales Data File">Late Sales Data File</option>
+        <option value="Manual Auditing">Manual Auditing</option>
+        <option value="Manual Invoice Validation">Manual Invoice Validation</option>
+        <option value="Manual Journal Entry">Manual Journal Entry</option>
+        <option value="Manual Refund Validation">Manual Refund Validation</option>
+        <option value="Memo Adjustment">Memo Adjustment</option>
+        <option value="Missing BSP RET">Missing BSP RET</option>
+        <option value="Missing Offline Refund">Missing Offline Refund</option>
+        <option value="Missing Offline Sale">Missing Offline Sale</option>
+        <option value="Missing Sales Data File">Missing Sales Data File</option>
+        <option value="Multiple Usage Task">Multiple Usage Task</option>
+        <option value="Not Billed Transactions">Not Billed Transactions</option>
+        <option value="Outward Csh Usage">Outward Csh Usage</option>
+        <option value="Paper Stock Availability">Paper Stock Availability</option>
+        <option value="Proration Error">Proration Error</option>
+        <option value="Proration Integrity">Proration Integrity</option>
+        <option value="Proration Other">Proration Other</option>
+        <option value="Refund Validation Warning">Refund Validation Warning</option>
+        <option value="Rejection Memo Reception">Rejection Memo Reception</option>
+        <option value="Rejection Memo Validation">Rejection Memo Validation</option>
+        <option value="Request and Response">Request and Response</option>
+        <option value="Rule BS Cabin">Rule BS Cabin</option>
+        <option value="Rule BS IATA Fare">Rule BS IATA Fare</option>
+        <option value="Rule BS Passenger">Rule BS Passenger</option>
+        <option value="Rule BS Seat Cost">Rule BS Seat Cost</option>
+        <option value="Rule Free Flow">Rule Free Flow</option>
+        <option value="SADAD">SADAD</option>
+        <option value="SIS Validation">SIS Validation</option>
+        <option value="Schedule Error">Schedule Error</option>
+        <option value="Tax Calculation Error">Tax Calculation Error</option>
+        <option value="Tax Other">Tax Other</option>
+        <option value="UD Discrepancy">UD Discrepancy</option>
+        <option value="Update Coupon Status">Update Coupon Status</option>
+        <option value="VAT billing">VAT billing</option>
+        <option value="Validation Error">Validation Error</option>
+        <option value="YQ File Acquisition">YQ File Acquisition</option>
+        <option value="YQ File creation">YQ File creation</option>
+        <option value="eSAL File Creation">eSAL File Creation</option>
+        <!-- <option *ngFor="let type of dis_type">{{ type.TaskType }}</option> -->
+      </select>
+    
+      <select onchange="onTaskItemChange('cmbApplicationFilter','cmbTaskTypeFilter','cmbTaskSubTypeFilter','cmbBusinessData1Filter','cmbBusinessData2Filter','cmbBusinessData3Filter')" id="cmbTaskSubTypeFilter" class="combo form-control" size="1" name="tasksubtypeFilter" style="visibility: visible;">
+        <option value="">No Task SubType Filter</option>
+        <option value="ABR rule not found">ABR rule not found</option>
+        <option value="ATPCO Ref Data">ATPCO Ref Data</option>
+        <option value="Airline Ref Data">Airline Ref Data</option>
+        <option value="Airport Change">Airport Change</option>
+        <option value="All amounts">All amounts</option>
+        <option value="Amount Discrepancy">Amount Discrepancy</option>
+        <option value="Audit Direct">Audit Direct</option>
+        <option value="Audit Indirect">Audit Indirect</option>
+        <option value="BSR Validation">BSR Validation</option>
+        <option value="Billing Memo is needed">Billing Memo is needed</option>
+        <option value="Cabin Change">Cabin Change</option>
+        <option value="Commission Exceeded">Commission Exceeded</option>
+        <option value="Coupon Data">Coupon Data</option>
+        <option value="Coupon Not Eligible for Refund">Coupon Not Eligible for Refund</option>
+        <option value="DCS Handback missing">DCS Handback missing</option>
+        <option value="Deactivated Stock">Deactivated Stock</option>
+        <option value="Delay in Request Reception">Delay in Request Reception</option>
+        <option value="Delay in Response Reception">Delay in Response Reception</option>
+        <option value="Departure Date Change">Departure Date Change</option>
+        <option value="Direct Sale">Direct Sale</option>
+        <option value="Discrepancy in Total USD Amnt">Discrepancy in Total USD Amnt</option>
+        <option value="Document Information">Document Information</option>
+        <option value="Duplicate Taxes">Duplicate Taxes</option>
+        <option value="Error">Error</option>
+        <option value="Exchange Balance">Exchange Balance</option>
+        <option value="Exchanged Ticket">Exchanged Ticket</option>
+        <option value="FCA parsing">FCA parsing</option>
+        <option value="Fare and Fare Calc">Fare and Fare Calc</option>
+        <option value="File Discrepancies">File Discrepancies</option>
+        <option value="Flight Discrepancy">Flight Discrepancy</option>
+        <option value="Flight Number Change">Flight Number Change</option>
+        <option value="Flight movement received">Flight movement received</option>
+        <option value="Flown coupons detected">Flown coupons detected</option>
+        <option value="Gap in Request sequence Batch">Gap in Request sequence Batch</option>
+        <option value="Gap in Response sequence Batch">Gap in Response sequence Batch</option>
+        <option value="Generic Issue">Generic Issue</option>
+        <option value="High Residual Value">High Residual Value</option>
+        <option value="High Tax Amount Detected">High Tax Amount Detected</option>
+        <option value="High prorated amount detected">High prorated amount detected</option>
+        <option value="IATA Number Mismatch">IATA Number Mismatch</option>
+        <option value="Indirect Sale">Indirect Sale</option>
+        <option value="Interline Auditing">Interline Auditing</option>
+        <option value="Invalid ABR rule">Invalid ABR rule</option>
+        <option value="Itinerary">Itinerary</option>
+        <option value="Itinerary Inconsistency">Itinerary Inconsistency</option>
+        <option value="Low Prorated Amount Detected">Low Prorated Amount Detected</option>
+        <option value="Low Tax Amount Detected">Low Tax Amount Detected</option>
+        <option value="Miscellaneous">Miscellaneous</option>
+        <option value="Mismatch in Request Cpn Status">Mismatch in Request Cpn Status</option>
+        <option value="Missing Bookrate">Missing Bookrate</option>
+        <option value="Missing Document">Missing Document</option>
+        <option value="Missing Ref Data Fare Basis">Missing Ref Data Fare Basis</option>
+        <option value="Missing Ref Data ICH">Missing Ref Data ICH</option>
+        <option value="Missing Ref Data PF">Missing Ref Data PF</option>
+        <option value="Missing in PSN">Missing in PSN</option>
+        <option value="Missing in SR">Missing in SR</option>
+        <option value="Missing settlement file">Missing settlement file</option>
+        <option value="Monetary Information">Monetary Information</option>
+        <option value="Negative Amount Detected">Negative Amount Detected</option>
+        <option value="No Stock Available">No Stock Available</option>
+        <option value="Not Received">Not Received</option>
+        <option value="Operating Carrier Change">Operating Carrier Change</option>
+        <option value="Out of sequence">Out of sequence</option>
+        <option value="PSN Missing">PSN Missing</option>
+        <option value="Passenger">Passenger</option>
+        <option value="Passenger Type Inconsistency">Passenger Type Inconsistency</option>
+        <option value="Received">Received</option>
+        <option value="Received but not processed">Received but not processed</option>
+        <option value="Received but processing is KO">Received but processing is KO</option>
+        <option value="Refund Currency Restriction">Refund Currency Restriction</option>
+        <option value="Refunded FOP Exceeds Sale FOP">Refunded FOP Exceeds Sale FOP</option>
+        <option value="Reprocess">Reprocess</option>
+        <option value="Request Document Missing">Request Document Missing</option>
+        <option value="Response Document Missing">Response Document Missing</option>
+        <option value="Response Value">Response Value</option>
+        <option value="Routing Information">Routing Information</option>
+        <option value="SIS Validation Error">SIS Validation Error</option>
+        <option value="SPA">SPA</option>
+        <option value="SR missing">SR missing</option>
+        <option value="Sent">Sent</option>
+        <option value="Several Invalid Data">Several Invalid Data</option>
+        <option value="TCN Acquisition">TCN Acquisition</option>
+        <option value="Tax only">Tax only</option>
+        <option value="Total Amnt for Exchanged Cpns">Total Amnt for Exchanged Cpns</option>
+        <option value="Total YQ Amount">Total YQ Amount</option>
+        <option value="Total level Integrity">Total level Integrity</option>
+        <option value="Used Stock">Used Stock</option>
+        <option value="Warning">Warning</option>
+        <option value="YQ Amount Discrepancy">YQ Amount Discrepancy</option>
+        <option value="YQ Coupons not Remitted">YQ Coupons not Remitted</option>
+        <option value="YQ Document Missing">YQ Document Missing</option>
+        <option value="eSAL File Created">eSAL File Created</option>
+        <!-- <option *ngFor="let subtype of dis_subtype">{{ subtype.TaskSubType }}</option> -->
+      </select>
+      
+      <button class="btn-light" type="button" style="background-color:white" (click)="ShowData()" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+      </button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary btn-xs" type="button" (click)="On_reset()" style="padding-top: 2px;padding-left: 2px;padding-right: 5px;padding-bottom: 5px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+          <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+        </svg> Reset
+      </button>
+    
+    </form>
+        <span style="float: right; margin: 5px;">MGILL</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16" style="float: right;">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+        </svg>
+      
+        
+          <!-- <select id="cmbTeamUnitFilter" class="combo" size="1" name="teamunitFilter" style="visibility: visible;"><option selected="selected" value="No Team Filter">No Team Filter</option><option value="FilterT1A_INVESTIGATION">1A_INVESTIGATION</option><option value="FilterTACCOUNTING_ABR">ACCOUNTING_ABR</option><option value="FilterTACCOUNTING_BOOKRATE">ACCOUNTING_BOOKRATE</option><option value="FilterTACCOUNTING_JOURNALBALANCE">ACCOUNTING_JOURNALBALANCE</option><option value="FilterTAGENCYMEMO">AGENCYMEMO</option><option value="FilterTALLIANCE_REVIEWER">ALLIANCE_REVIEWER</option><option value="FilterTBA_2ND_PASS_AUDIT">BA_2ND_PASS_AUDIT</option><option value="FilterTBA_3RD_PARTY_AUDIT">BA_3RD_PARTY_AUDIT</option><option value="FilterTBA_AIRPORTS">BA_AIRPORTS</option><option value="FilterTBA_ALLIANCES">BA_ALLIANCES</option><option value="FilterTBA_ARGENTINA">BA_ARGENTINA</option><option value="FilterTBA_AUDIT">BA_AUDIT</option><option value="FilterTBA_BILLING_SUPPORT">BA_BILLING_SUPPORT</option><option value="FilterTBA_BRAZIL">BA_BRAZIL</option><option value="FilterTBA_CHARGEBACKS">BA_CHARGEBACKS</option><option value="FilterTBA_CODESHARE">BA_CODESHARE</option><option value="FilterTBA_FIM">BA_FIM</option><option value="FilterTBA_FINANCIAL_ACCOUNTING">BA_FINANCIAL_ACCOUNTING</option><option value="FilterTBA_FINANCIAL_ACCOUNTING_TAX">BA_FINANCIAL_ACCOUNTING_TAX</option><option value="FilterTBA_FLYLINE">BA_FLYLINE</option><option value="FilterTBA_GLOBAL_GROUP_OPERATIONS">BA_GLOBAL_GROUP_OPERATIONS</option><option value="FilterTBA_GLOBAL_REFUNDS">BA_GLOBAL_REFUNDS</option><option value="FilterTBA_GROUP_OPERATIONS">BA_GROUP_OPERATIONS</option><option value="FilterTBA_GSA_AND_PARTNER">BA_GSA_AND_PARTNER</option><option value="FilterTBA_INTERLINE_CORRES">BA_INTERLINE_CORRES</option><option value="FilterTBA_INTERLINE_FIM_EMD_XSB">BA_INTERLINE_FIM_EMD_XSB</option><option value="FilterTBA_INTERLINE_PRIME">BA_INTERLINE_PRIME</option><option value="FilterTBA_INTERLINE_REJECTIONS">BA_INTERLINE_REJECTIONS</option><option value="FilterTBA_INTERLINE_WTS">BA_INTERLINE_WTS</option><option value="FilterTBA_INVENTORY_MAPPING">BA_INVENTORY_MAPPING</option><option value="FilterTBA_MEXICO">BA_MEXICO</option><option value="FilterTBA_OVERSEAS_FINANCE_COMMERCIAL">BA_OVERSEAS_FINANCE_COMMERCIAL</option><option value="FilterTBA_PRA_SUPPORT">BA_PRA_SUPPORT</option><option value="FilterTBA_PRORATION_PATCHING">BA_PRORATION_PATCHING</option><option value="FilterTBA_PRORATION_PATCHING_BA">BA_PRORATION_PATCHING_BA</option><option value="FilterTBA_PRORATION_PATCHING_OC">BA_PRORATION_PATCHING_OC</option><option value="FilterTBA_PRORATION_PATCHING_TAX">BA_PRORATION_PATCHING_TAX</option><option value="FilterTBA_PRORATION_REF_DATA">BA_PRORATION_REF_DATA</option><option value="FilterTBA_PRORATION_REPLAY_BA">BA_PRORATION_REPLAY_BA</option><option value="FilterTBA_PRORATION_REPLAY_OC">BA_PRORATION_REPLAY_OC</option><option value="FilterTBA_RECEIVABLES">BA_RECEIVABLES</option><option value="FilterTBA_REFUNDS">BA_REFUNDS</option><option value="FilterTBA_RES_TKT_SALES">BA_RES_TKT_SALES</option><option value="FilterTBA_UK_AND_I_SALES">BA_UK_AND_I_SALES</option><option value="FilterTBA_UK_DISTRIBUTION_LHR_NCL">BA_UK_DISTRIBUTION_LHR_NCL</option><option value="FilterTBA_USAGE_AND_SALES_AUDIT">BA_USAGE_AND_SALES_AUDIT</option><option value="FilterTBA_USAGE_AND_SALES_CONTROL_WNS">BA_USAGE_AND_SALES_CONTROL_WNS</option><option value="FilterTBA_USAGE_AND_SALES_CONTROL_WTS">BA_USAGE_AND_SALES_CONTROL_WTS</option><option value="FilterTCODESHARE_BLOCKSPACE">CODESHARE_BLOCKSPACE</option><option value="FilterTCODESHARE_FREEFLOW">CODESHARE_FREEFLOW</option><option value="FilterTFIM_ACQUISITION_TICKET_VALIDATION">FIM_ACQUISITION_TICKET_VALIDATION</option><option value="FilterTFLIGHT_HANDLING">FLIGHT_HANDLING</option><option value="FilterTFOP_DISCREPANCIES">FOP_DISCREPANCIES</option><option value="FilterTGEN_1A">GEN_1A</option><option value="FilterTGEN_ACC">GEN_ACC</option><option value="FilterTGEN_ADM">GEN_ADM</option><option value="FilterTGEN_AUB">GEN_AUB</option><option value="FilterTGEN_CSH">GEN_CSH</option><option value="FilterTGEN_EXP">GEN_EXP</option><option value="FilterTGEN_FOP">GEN_FOP</option><option value="FilterTGEN_FRA">GEN_FRA</option><option value="FilterTGEN_FTA">GEN_FTA</option><option value="FilterTGEN_IBM">GEN_IBM</option><option value="FilterTGEN_OW">GEN_OW</option><option value="FilterTGEN_PRR">GEN_PRR</option><option value="FilterTGEN_PSC">GEN_PSC</option><option value="FilterTGEN_REF">GEN_REF</option><option value="FilterTGEN_RSI">GEN_RSI</option><option value="FilterTGEN_STO">GEN_STO</option><option value="FilterTGEN_TAX">GEN_TAX</option><option value="FilterTGEN_TCN">GEN_TCN</option><option value="FilterTGEN_UAM">GEN_UAM</option><option value="FilterTIBE_DISCREPANCIES">IBE_DISCREPANCIES</option><option value="FilterTINTERLINE_ACQUISITION_AUDITING">INTERLINE_ACQUISITION_AUDITING</option><option value="FilterTINTERLINE_MEMO_AUDITING">INTERLINE_MEMO_AUDITING</option><option value="FilterTINTERLINE_MEMO_VALIDATION">INTERLINE_MEMO_VALIDATION</option><option value="FilterTINTERLINE_USAGE_AUDITING">INTERLINE_USAGE_AUDITING</option><option value="FilterTKIOSK_DISCREPANCIES">KIOSK_DISCREPANCIES</option><option value="FilterTPAPERSTOCK_MANAGEMENT">PAPERSTOCK_MANAGEMENT</option><option value="FilterTPENDING_MIGRATION">PENDING_MIGRATION</option><option value="FilterTPRORATION_ADVANCED_ERRORS">PRORATION_ADVANCED_ERRORS</option><option value="FilterTPRORATION_DOCUMENT_DATACONTROL">PRORATION_DOCUMENT_DATACONTROL</option><option value="FilterTPRORATION_REFERENTIAL_DATACONTROL">PRORATION_REFERENTIAL_DATACONTROL</option><option value="FilterTPRORATION_TRAVEL_DATACONTROL">PRORATION_TRAVEL_DATACONTROL</option><option value="FilterTREALTIME_ACQUISITION_EXCHANGE_VALI">REALTIME_ACQUISITION_EXCHANGE_VALIDATION</option><option value="FilterTREALTIME_ACQUISITION_REFUND_VALIDA">REALTIME_ACQUISITION_REFUND_VALIDATION</option><option value="FilterTREALTIME_ACQUISITION_VALIDATION">REALTIME_ACQUISITION_VALIDATION</option><option value="FilterTSADAD_DISCREPANCIES">SADAD_DISCREPANCIES</option><option value="FilterTSALES_REPORTING_REVIEWER">SALES_REPORTING_REVIEWER</option><option value="FilterTSALES_TEAM_LEADER">SALES_TEAM_LEADER</option><option value="FilterTSA_ACC_ABR">SA_ACC_ABR</option><option value="FilterTSA_ACC_OFFICER">SA_ACC_OFFICER</option><option value="FilterTSA_FARE_AUDIT">SA_FARE_AUDIT</option><option value="FilterTSA_FARE_AUDIT_TEAM_LEADER">SA_FARE_AUDIT_TEAM_LEADER</option><option value="FilterTSA_FLOWN">SA_FLOWN</option><option value="FilterTSA_INTERLINE_FIRST">SA_INTERLINE_FIRST</option><option value="FilterTSA_INTERLINE_SECOND_THIRD">SA_INTERLINE_SECOND_THIRD</option><option value="FilterTSA_INTERLINE_VERIFICATION">SA_INTERLINE_VERIFICATION</option><option value="FilterTSA_REF_TABLE">SA_REF_TABLE</option><option value="FilterTSA_SALES_OPERATOR">SA_SALES_OPERATOR</option><option value="FilterTSA_SALES_OTHER">SA_SALES_OTHER</option><option value="FilterTSA_SALES_PRORATION">SA_SALES_PRORATION</option><option value="FilterTSV_DFO_AUDIT">SV_DFO_AUDIT</option><option value="FilterTSV_DXB_FARE_AUDIT">SV_DXB_FARE_AUDIT</option><option value="FilterTSV_FARE_AUDIT">SV_FARE_AUDIT</option><option value="FilterTSV_FLIGHT_HANDLING">SV_FLIGHT_HANDLING</option><option value="FilterTSV_REV_FAT_AUT_ADM">SV_REV_FAT_AUT_ADM</option><option value="FilterTSV_REV_FAT_MAN_ADM">SV_REV_FAT_MAN_ADM</option><option value="FilterTSV_SALES_REPORT_CONTROL_AND_ACQUIS">SV_SALES_REPORT_CONTROL_AND_ACQUISITION</option><option value="FilterTTAX_ALERTS">TAX_ALERTS</option><option value="FilterTTAX_FARE_FARECALC_ERRORS">TAX_FARE_FARECALC_ERRORS</option><option value="FilterTTAX_FARE_QUOTE_MAINTENANCE">TAX_FARE_QUOTE_MAINTENANCE</option><option value="FilterTTAX_MISCELLANEOUS_ERRORS">TAX_MISCELLANEOUS_ERRORS</option></select> -->
+        
+        <!--ACTION PANE-->
+        <br>
+        <br>
+      <div class="action_pane">
+        <button style="background: none; border: none;" (click)="edit_func()" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+        </button>
+        <span class="space_span"></span>
+        <button style="background: none; border: none;" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-hand-thumbs-up" viewBox="0 0 16 16">
+            <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
+          </svg>
+        </button>
+        <span class="space_span"></span>
+        <button style="background: none; border: none;" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-hand-thumbs-down" viewBox="0 0 16 16">
+            <path d="M8.864 15.674c-.956.24-1.843-.484-1.908-1.42-.072-1.05-.23-2.015-.428-2.59-.125-.36-.479-1.012-1.04-1.638-.557-.624-1.282-1.179-2.131-1.41C2.685 8.432 2 7.85 2 7V3c0-.845.682-1.464 1.448-1.546 1.07-.113 1.564-.415 2.068-.723l.048-.029c.272-.166.578-.349.97-.484C6.931.08 7.395 0 8 0h3.5c.937 0 1.599.478 1.934 1.064.164.287.254.607.254.913 0 .152-.023.312-.077.464.201.262.38.577.488.9.11.33.172.762.004 1.15.069.13.12.268.159.403.077.27.113.567.113.856 0 .289-.036.586-.113.856-.035.12-.08.244-.138.363.394.571.418 1.2.234 1.733-.206.592-.682 1.1-1.2 1.272-.847.283-1.803.276-2.516.211a9.877 9.877 0 0 1-.443-.05 9.364 9.364 0 0 1-.062 4.51c-.138.508-.55.848-1.012.964l-.261.065zM11.5 1H8c-.51 0-.863.068-1.14.163-.281.097-.506.229-.776.393l-.04.025c-.555.338-1.198.73-2.49.868-.333.035-.554.29-.554.55V7c0 .255.226.543.62.65 1.095.3 1.977.997 2.614 1.709.635.71 1.064 1.475 1.238 1.977.243.7.407 1.768.482 2.85.025.362.36.595.667.518l.262-.065c.16-.04.258-.144.288-.255a8.34 8.34 0 0 0-.145-4.726.5.5 0 0 1 .595-.643h.003l.014.004.058.013a8.912 8.912 0 0 0 1.036.157c.663.06 1.457.054 2.11-.163.175-.059.45-.301.57-.651.107-.308.087-.67-.266-1.021L12.793 7l.353-.354c.043-.042.105-.14.154-.315.048-.167.075-.37.075-.581 0-.211-.027-.414-.075-.581-.05-.174-.111-.273-.154-.315l-.353-.354.353-.354c.047-.047.109-.176.005-.488a2.224 2.224 0 0 0-.505-.804l-.353-.354.353-.354c.006-.005.041-.05.041-.17a.866.866 0 0 0-.121-.415C12.4 1.272 12.063 1 11.5 1z"/>
+          </svg>
+        </button>
+        <span class="space_span"></span>
+        <button style="background: none; border: none;" type="submit" (click)="clone_func()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-front" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm5 10v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2v5a2 2 0 0 1-2 2H5z"/>
+          </svg>
+        </button>
+        <span class="space_span"></span>
+        <button style="background: none; border: none;" type="submit" (click)="new_template_func(editProfileModal)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+          </svg>
+        </button>
+    </div>
+        <!--TABLE-->
+    <div class="table-responsive text-align:center">
+    <table id="temp-table" class="table table-bordered table-sm table-hover sortable" style="display: inline-table;">
+      <thead class="thead-light">
+        <tr>
+          <th class= "absorbing-column" scope="col" style="width:  4.33%">#</th>
+          <th class= "absorbing-column" scope="col">Application</th>
+          <th class= "absorbing-column" scope="col">Type</th>
+          <th class= "absorbing-column" scope="col">Subtype</th>
+          <th class= "absorbing-column" scope="col">Template_Enabled</th>
+          <th class= "absorbing-column" scope="col">Severity</th>
+          <th class= "absorbing-column" scope="col">Assigned_Team</th>
+          <th class= "absorbing-column" scope="col">Description</th>
+          <th class= "absorbing-column" scope="col">Number_Of_Validity_Days</th>
+          <th class= "absorbing-column" scope="col">Number_Of_Due_Days</th>
+          <th class= "absorbing-column" scope="col">Provider_Service_Name</th>
+          <th class= "absorbing-column" scope="col">Dynamic_Choice</th>
+          <th class= "absorbing-column" scope="col">V1</th>
+          <th class= "absorbing-column" scope="col">V2</th>
+          <th class= "absorbing-column" scope="col">Provider_Application</th>
+          <th class= "absorbing-column" scope="col">Security_ID</th>
+          <th class= "absorbing-column" scope="col">Assigned_Team_Type</th>
+          <th class= "absorbing-column" scope="col">Assigned_Username</th>
+          <th class= "absorbing-column" scope="col">Assigned_User_Office</th>
+          <th class= "absorbing-column" scope="col">Assigned_User_Org</th>
+          <th class= "absorbing-column" scope="col">Business_Data_Index_Key_Names</th>
+          <th class= "absorbing-column" scope="col">Business_Data_Non_Index_Key_Names</th>
+          <!-- <th class= "absorbing-column" scope="col">Enabled_by_Client</th>
+          <th class= "absorbing-column" scope="col">Enabled_by_1A</th> -->
+          <th class= "absorbing-column" scope="col">EMAIL_Recipients</th>
+          <th class= "absorbing-column" scope="col">EMAIL_From</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- { itemsPerPage: 2, currentPage: p }; let i = index -->
+        <tr *ngFor="let task of taskData | paginate: config">
+          <td scope="row">
+            <!-- value=task onchange=openModal(editProfileModal,task) -->
+            <input type="radio" name="cbx" id="cbx" (click)=check_it(editProfileModal,task)>
+          </td>
+          <td>{{ task.Application }}</td>
+          <td>{{ task.TaskType }}</td>
+          <td>{{ task.TaskSubType }}</td>
+          <!-- Enabled/Disabled -->
+          <td *ngIf="task.ActiveFlag==='Y' && task.SupportedFlag==='Y';else elseBlock">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-circle-fill" viewBox="0 0 16 16">
+              <circle cx="5" cy="5" r="5"/>
+            </svg>
+          </td>
+          <ng-template #elseBlock>
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                <circle cx="5" cy="5" r="5"/>
+              </svg>
+            </td>
+          </ng-template>
+          <!-- Severity -->
+          <td>{{ task.Severity }}</td>
+          <td>{{ task.AssignedTeam }}</td>
+          <td>{{ task.Description }}</td>
+          <!-- Number Of Validity Days -->
+          <td>{{ task.NumberValidityOfDay }}</td>
+          <!-- Number Of Due Days -->
+          <td>{{ task.NumberDueOfDay }}</td>
+          <td>{{ task.ProviderServiceName }}</td>
+          <!-- Dynamic Choice -->
+          <td>{{ task.DynamicChoice }}</td>
+          <td>{{ task.ValidationL1trigger }}</td>
+          <td>{{ task.ValidationL2trigger }}</td>
+          <td>{{ task.ProviderApplication }}</td>
+          <td>{{ task.SecurityID }}</td>
+          <td>{{ task.AssignedTeamType }}</td>
+          <td>{{ task.AssignedUserName }}</td>
+          <td>{{ task.AssignedUserOffice }}</td>
+          <td>{{ task.AssignedUserOrganisation }}</td>
+          <!-- BusinessDataIndexKeyNames -->
+          <td></td>
+          <!-- BusinessDataNonIndexKeyNames -->
+          <td></td>
+          <!-- Enabled By Client
+          <td>{{ task.ActiveFlag }}</td>
+          Enabled By 1A
+          <td>{{ task.SupportedFlag }}</td>-->
+          <!-- EMAIL Recipients -->
+          <td></td>
+          <td>{{ task.EmailFrom }}</td>
+    
+          <!-- <td>{{ task.ValidationRejectionWFL }}</td>
+          <td><button type="button" class="btn btn-xs" (click)="openModal(easyQueryBuilder, task)" title="Easy Query Builder" data-content="Criteria"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+          </svg></button></td>
+          <td><button type="button" class="btn btn-xs" data-toggle="popover" title="Easy Query Builder" data-content="Criteria"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+          </svg></button></td>
+          <td><button type="button" class="btn btn-xs" data-toggle="popover" title="Easy Query Builder" data-content="Criteria"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+          </svg></button></td> -->
+        </tr>
+      </tbody>
+      <!-- <pagination-controls [previousLabel]="labels.previousLabel"
+                           [nextLabel]="labels.nextLabel"
+                           (pageChange)="p = $event"></pagination-controls> -->
+    </table>
+    </div>
+    <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+      <div class="custom-pagination">
+        <div class="pagination-previous" >
+          <span (click)="p.previous()"> < Previous  </span> &nbsp;&nbsp;&nbsp;
+        </div> 
+          <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+              <div *ngIf="p.getCurrent() === page.value">
+                <span>{{ page.label }}</span>
+              </div>
+          </div>
+          <div class="pagination-next" >
+            &nbsp;&nbsp;&nbsp;<span (click)="p.next()"> Next > </span>
+          </div>
+      </div>
+    
+    </pagination-template>
+    <br>
+    <br>
+    
+    </div>
+    <ng-template style="size: 'xl';" #editProfileModal let-modal>
+      <div class="modal-header">
+       <h5 class="modal-title" id="editProfileLabel">Edit</h5>
+       <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+       </button>
+      </div>
+      
+      <div class="modal-body">
+       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+    
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Airline</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="Airline" id="Airline">
+          </div>
+         </div>
+    
+        <div class="form-group row">
+         <label for="firstname" class="col-sm-4 col-form-label">Application</label>
+         <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="Application" id="Application">
+         </div>
+        </div>
+    
+        <div class="form-group row">
+         <label for="lastname" class="col-sm-4 col-form-label">TaskType</label>
+         <div class="col-sm-8">
+          <input type="text" ng-readonly="all" class="form-control" formControlName="TaskType" id="TaskType">
+         </div>
+        </div>
+    
+        <div class="form-group row">
+         <label for="username" class="col-sm-4 col-form-label">Subtype</label>
+         <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="TaskSubType" id="TaskSubType">
+         </div>
+        </div> 
+    
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Severity</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="Severity" id="Severity">
+          </div>
+         </div>
+        
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Assigned Team</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="AssignedTeam" id="AssignedTeam">
+          </div>
+        </div>
+    
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Assigned Team Type</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="AssignedTeamType" id="AssignedTeamType">
+          </div>
+        </div>
+    
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Assigned Username</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="AssignedUsername" id="AssignedUsername">
+          </div>
+        </div>
+    
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Assigned User Office</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="AssignedUserOffice" id="AssignedUserOffice">
+          </div>
+        </div>
+    
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Assigned User Org</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="AssignedUserOrg" id="AssignedUserOrg">
+          </div>
+        </div>
+    
+        <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Provider Service Name</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="ProviderServiceName" id="ProviderServiceName">
+          </div>
+        </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Business Data Index Key Names</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="BusinessDataIndexKeyNames" id="BusinessDataIndexKeyNames">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Business Data Non Index Key Names</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="BusinessDataNonIndexKeyNames" id="BusinessDataNonIndexKeyNames">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Enabled/Disabled</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" value= "{{ Temp_E }}">
+            <!-- formControlName="TemplateEnabled" id="TemplateEnabled" -->
+           <!-- <input type="text" class="form-control" ngIf="task.ActiveFlag==='Y' && task.SupportedFlag==='Y';else elseBlock" value="Y">
+           <ng-template #elseBlock>
+            <input type="text" class="form-control" value="N">
+          </ng-template> -->
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Description</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="Description" id="Description">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">NBRE of Validity Days</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="NumberValidityOfDay" id="NumberValidityOfDay">
+          </div>
+         </div>
+    
+          <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">NBRE of Due Days</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="NumberDueOfDay" id="NumberDueOfDay">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Provider Application</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="ProviderApplication" id="ProviderApplication">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Security ID</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="SecurityID" id="SecurityID">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">EMAIL Recipients</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="EMAILRecipients" id="EMAILRecipients">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">EMAIL From</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="EMAILFrom" id="EMAILFrom">
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Dynamic Choice</label>
+          <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="DynamicChoice" id="DynamicChoice" value="{{ EQF1 }} ( {{ EQF2 }} )" (click)=openModal_1(easyQueryBuilder,task) readonly>
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Validation 1 Trigger</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="Validation1Trigger" id="Validation1Trigger" readonly>
+           <!-- (click)=openModal_1(easyQueryBuilder,task) -->
+          </div>
+         </div>
+    
+         <div class="form-group row">
+          <label for="username" class="col-sm-4 col-form-label">Validation 2 Trigger</label>
+          <div class="col-sm-8">
+           <input type="text" class="form-control" formControlName="Validation2Trigger" id="Validation2Trigger" readonly>
+           <!-- (click)=openModal_1(easyQueryBuilder,task) -->
+          </div>
+         </div>
+    
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+          <button type="submit" class="btn btn-primary" (click)="modal.dismiss()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save2" viewBox="0 0 16 16">
+            <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v4.5h2a.5.5 0 0 1 .354.854l-2.5 2.5a.5.5 0 0 1-.708 0l-2.5-2.5A.5.5 0 0 1 5.5 6.5h2V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+          </svg> Save</button>
+         </div>
+    
+       </form>
+      </div>
+     </ng-template>
+    
+     <ng-template #easyQueryBuilder let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="easyQueryBuilder">Easy Query Builder</h5>
+        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    
+      <div class="modal-body">
+        <form [formGroup]="easyQueryBuilder" (ngSubmit)="onSubmit()">
+        <div>
+          <select class="form-control" style="width: auto;" id="EQF1">
+            <option value="NO_SELECTION">NO SELECTION</option>
+            <option value="BUSINESS_DATA">BUSINESS_DATA</option>
+            <option value="LSS_DATA">LSS_DATA</option>
+            <option value="LSS_PERMISSION">LSS_PERMISSION</option>
+          </select>
+        </div>
+        <br> 
+        <form class="form-inline">
+          <select class="form-control" id="EQF2">
+            <option>No Attribute Selected</option>
+            <option value="RECEIVABLEAMOUNT">RECEIVABLEAMOUNT</option>
+            <option value="PAYABLEAMOUNT">PAYABLEAMOUNT</option>
+            <option value="REASON_CODE">REASON_CODE</option>
+            <option value="IWB_SOURCE_CODE">IWB_SOURCE_CODE</option>
+            <option value="PARTNER_EMAIL">PARTNER_EMAIL</option>
+            <option value="OCVALIDATING">OCVALIDATING</option>
+            <option value="AGENCYNUMBER">AGENCYNUMBER</option>
+            <option value="threshold">threshold</option>
+            <option value="xp">xp</option>
+            <option value="Experience">Experience</option>
+            <option value="limit">limit</option>
+            <option value="AIRLINE_PARTNER">AIRLINE_PARTNER</option>
+            <option value="OWB_MEMO_AMOUNT">OWB_MEMO_AMOUNT</option>
+            <option value="IS_REPROCESS">IS_REPROCESS</option>
+          </select>
+          <select class="form-control">
+            <option></option>
+            <option>=</option>
+            <option><></option>
+            <option>LIKE</option>
+            <option>IN</option>
+          </select>
+          <select class="form-control">
+            <option value="YES">YES</option>
+            <option value="NO">NO</option>
+          </select>
+        </form>
+    
+        <div>
+          <select class="form-control" style="width: auto;">
+            <option value="AND">AND</option>
+            <option value="EQUAL">EQUAL</option>
+            <option value="NOTEQUAL">NOTEQUAL</option>
+            <option value="AND">IN</option>
+          </select>
+        </div>
+    
+       <form class="form-inline">
+        <select class="form-control">
+          <option>No Attribute Selected</option>
+          <option value="RECEIVABLEAMOUNT">RECEIVABLEAMOUNT</option>
+          <option value="PAYABLEAMOUNT">PAYABLEAMOUNT</option>
+          <option value="REASON_CODE">REASON_CODE</option>
+          <option value="IWB_SOURCE_CODE">IWB_SOURCE_CODE</option>
+          <option value="PARTNER_EMAIL">PARTNER_EMAIL</option>
+          <option value="OCVALIDATING">OCVALIDATING</option>
+          <option value="AGENCYNUMBER">AGENCYNUMBER</option>
+          <option value="threshold">threshold</option>
+          <option value="xp">xp</option>
+          <option value="Experience">Experience</option>
+          <option value="limit">limit</option>
+          <option value="AIRLINE_PARTNER">AIRLINE_PARTNER</option>
+          <option value="OWB_MEMO_AMOUNT">OWB_MEMO_AMOUNT</option>
+          <option value="IS_REPROCESS">IS_REPROCESS</option>
+        </select>
+        <select class="form-control">
+          <option></option>
+          <option>=</option>
+          <option><></option>
+          <option>LIKE</option>
+          <option>IN</option>
+        </select>
+        <select class="form-control" >
+          <option value="YES">YES</option>
+          <option value="NO">NO</option>
+        </select>
+       </form>
+       </form>
+      </div>
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss(); query_func();">Close</button>
+        <button class="btn btn-primary"(click)="modal.dismiss(); ">Save</button>
+      </div>
+     </ng-template>
+    </div>
+    

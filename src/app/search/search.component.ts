@@ -1,13 +1,25 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 // import { ExportService } from '../export.service';
 import {GetAirlineCodesService} from '../get-airline-codes.service';
 import { Location, LocationStrategy } from '@angular/common';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Pipe, PipeTransform } from '@angular/core';
 
+import { NgSearchFilterService } from 'ng-search-filter';
+import { HostListener } from '@angular/core';
+
+import { ExportToCsv } from 'export-to-csv';
+
+@Pipe({ name: 'values',  pure: false })
+export class ValuesPipe implements PipeTransform {
+  transform(value: any, args: any[] = null): any {
+    return Object.keys(value).map(key => value[key]);
+  }
+}
 
 @Component({
   selector: 'app-search',
@@ -17,14 +29,14 @@ import { DOCUMENT } from '@angular/common';
 export class SearchComponent implements OnInit {
 
 
-  constructor(private http: HttpClient,private fb: FormBuilder, private modalService: NgbModal,private GetAirlineCodesService:GetAirlineCodesService,public location: Location, private locationStrategy: LocationStrategy,@Inject(DOCUMENT) private document: Document) {
+  constructor(private http: HttpClientModule,private fb: FormBuilder, private modalService: NgbModal,private GetAirlineCodesService:GetAirlineCodesService,public location: Location, private locationStrategy: LocationStrategy,@Inject(DOCUMENT) private document: Document, private _ngSearchFilterService: NgSearchFilterService) {
     const origin = this.document.location.origin;
   }
   
   
   // private exportService: ExportService
 
-  dtOptions: DataTables.Settings={};
+  dtOptions:any={};
 
   editProfileForm: FormGroup;
 
@@ -33,127 +45,67 @@ export class SearchComponent implements OnInit {
   posts;
 
   config:any;
+moduleList:any=['Module 1','Module 2','Module 3','Module 4','Module 5'];
 
-  airlineList: any=['6X','8X','BA','JL','MH','NT','CX'];
-  moduleList: any=['Module 1','Module 2','Module 3','Module 4','Module 5'];
+AirlinesCodesList:any;
+ParameterNames:any[]=[];
+ParameterCodes:any[]=[];
+ParameterValues:any[]=[];
+commonList:any[]=[];
+userList:any[]=[];
+parameterList:any[]=[];
+sendResult:any[]=[];
+oldParameterValue:any;
+dropDownData:any;
+options = { 
+  fieldSeparator: ',',
+  quoteStrings: '"',
+  decimalSeparator: '.',
+  showLabels: true, 
+  showTitle: true,
+  title: 'Rev Airline Configuration Parameters',
+  useTextFile: false,
+  useBom: true,
+  useKeysAsHeaders: true,
+  // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+};
 
-  form= new FormGroup({
-    airline: new FormControl('',Validators.required),
-    module: new FormControl('',Validators.required)
-  });
-
-  get f(){
-    return this.form.controls;
-  }
-
-  submit(){
-    console.log(this.form.value);
-  }
 
 
- userList = [
- {
-  AirlinesCode:"6X",
-  Module:"",
-  ParameterName:"1A_HOSTED_AIRLINE",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"8X",
-  Module:"",
-  ParameterName:"1A_HOSTED_AIRLINE",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"BA",
-  Module:"",
-  ParameterName:"ACC_ALLOW_STR_LEDGER_ACCOUNT",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"JL",
-  Module:"",
-  ParameterName:"ACC_ALLOW_STR_LEDGER_ACCOUNT",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"MH",
-  Module:"",
-  ParameterName:"ACC_BY_PASS_REASON_CODE_ACCEPT",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"NT",
-  Module:"",
-  ParameterName:"ACC_ACTIVATE_PTR20715531",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"CX",
-  Module:"",
-  ParameterName:"ACC_ALLOW_STR_LEDGER_ACCOUNT",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"JL",
-  Module:"",
-  ParameterName:"ACC_ALLOW_STR_LEDGER_ACCOUNT",
-  Description:"",
-  ParameterValue:"Y"
- },
- {
-  AirlinesCode:"MH",
-  Module:"",
-  ParameterName:"ACC_ALLOW_STR_LEDGER_ACCOUNT",
-  Description:"",
-  ParameterValue:"Y"
- }
-];
+ ngOnInit() {  
 
-AirlinesCodesList=[];
-answer:any;
-heli:any;
- ngOnInit() {
+  this._ngSearchFilterService.setDefaultLang('en');
 
-  
-  this.GetAirlineCodesService.fetchData().subscribe((data: any[])=>{
-    console.log("hello")
-    console.log(data);
-    this.AirlinesCodesList=data;
+  this.GetAirlineCodesService.fetchAirlineCodes().subscribe((data: any)=>{
+    this.AirlinesCodesList=Object.values(data);
   })
 
-  this.GetAirlineCodesService.fetchAirlineData().subscribe((data: any[])=>{
-    console.log(data);
-    this.heli=data;
+  this.GetAirlineCodesService.fetchAirlineParameterNames().subscribe((data: any)=>{
+    this.ParameterNames=Object.values(data);
+    this.userList=this.ParameterNames;
+  })  
+
+  this.GetAirlineCodesService.fetchAirlineParameterCodes().subscribe((data: any)=>{
+    this.ParameterCodes=Object.values(data);
+    this.userList=this.ParameterNames.map((id,index)=>{
+      return{
+        names:id,
+        codes:this.ParameterCodes[index]
+      }
+    })
+  })  
+
+  this.GetAirlineCodesService.fetchAirlineParameterValues().subscribe((data: any)=>{
+    this.ParameterValues=Object.values(data);
+    this.parameterList=this.ParameterCodes.map((codes,index)=>{
+      return{
+        codes:codes,
+        names:this.ParameterNames[index],
+        values:this.ParameterValues[index]
+      }
+    })
   })
 
-  this.GetAirlineCodesService.fetchCurrencyData().subscribe((data: any[])=>{
-    console.log(data);
-    this.answer=data;
-  })
-
-  this.GetAirlineCodesService.X().subscribe((data: any[])=>{
-    console.log(data);
-    this.answer=data;
-  })
-
-  this.dtOptions={
-    pagingType:'full_numbers',
-    pageLength:5,
-    processing:true
-  }
-
-  // this.http.get('http://jsonplaceholder.typicode.com/posts')
-  //     .subscribe(posts => {
-  //       this.posts = posts;
-  //   });
 
     this.config={
       itemsPerPage:5,
@@ -169,12 +121,14 @@ heli:any;
   Description:[''],
   ParameterValue:['']
   });
+
+
  }
+
 
  pageChanged(event){
    this.config.currentPage=event;
  }
-
 
  openModal(targetModal, user) {
   this.modalService.open(targetModal, {
@@ -185,45 +139,63 @@ heli:any;
   this.editProfileForm.controls['AirlinesCode'].disable();
   this.editProfileForm.controls['Module'].disable();
   this.editProfileForm.controls['ParameterName'].disable();
-  // this.editProfileForm.controls['Description'].disable();
+
 
   this.editProfileForm.patchValue({
-  AirlinesCode:user.AirlinesCode,
-  ParameterName:user.ParameterName,
-  ParameterValue:user.ParameterValue
+  AirlinesCode:user.codes,
+  ParameterName:user.names,
+  ParameterValue:user.values
   });
+
+  this.oldParameterValue=user.values;
+
  }
+
  onSubmit() {
   this.modalService.dismissAll();
-  console.log("res:", this.editProfileForm.getRawValue());
-  console.log("dsa");
-  console.log(origin);
-  console.log(this.location.path.name);
-  console.log('ds');
-  console.log(this.location.path());
-  console.log(this.location.prepareExternalUrl('/'));
-  console.log(this.locationStrategy.getBaseHref());
-  console.log(this.AirlinesCodesList);
-  console.log(this.answer);
-  console.log(this.heli);
+  this.sendResult=[this.editProfileForm.controls.AirlinesCode.value,this.editProfileForm.controls.ParameterName.value,this.editProfileForm.controls.ParameterValue.value,this.oldParameterValue]
+  this.GetAirlineCodesService.sendAirlineParameters(this.sendResult).subscribe();
+  window.location.reload();
+
  }
 
-//  exportElmToExcel(): void {
-//   this.exportService.exportTableElmToExcel(this.userTable, 'user_data');
-// }
 
-foo(): void {
-  console.log(this.location.path());
-  console.log(this.location.prepareExternalUrl('/'));
-  console.log(this.locationStrategy.getBaseHref());
+ form= new FormGroup({
+  airline: new FormControl('',Validators.required),
+  module: new FormControl('',Validators.required)
+});
+
+get f(){
+  return this.form.controls;
 }
 
-hello(){
-  console.log("dsa");
-  console.log(origin);
-  console.log(this.location.path.name);
-  console.log('ds');
+submit(){
+  this.dropDownData = this.form.controls.airline.value;
 }
+
+refreshList()
+{
+  this.dropDownData='';
+}
+
+@HostListener('document:keyup', ['$event'])
+  handleDeleteKeyboardEvent(event: KeyboardEvent) {
+    if(event.key === 'r')
+    {
+      this.dropDownData='';
+    }
+  }
+
+
+
+ exportElmToExcel(): void {
+  // this.exportService.exportTableElmToExcel(this.userTable, 'user_data');
+  const csvExporter = new ExportToCsv(this.options);
+
+  csvExporter.generateCsv(this.parameterList);
+}
+
+
 
 
 
